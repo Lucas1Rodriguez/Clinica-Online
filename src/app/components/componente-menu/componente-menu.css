@@ -1,0 +1,15 @@
+.navbar {
+    font-family: 'Coiny', system-ui;
+    background-color: #1E3A8A;
+    padding: 20px;
+
+    a {
+        color: lightcoral;
+        margin: 15px;
+        padding: 20px;
+    }
+    a:hover{
+        color: gold;
+        background-color: black;
+    }
+}

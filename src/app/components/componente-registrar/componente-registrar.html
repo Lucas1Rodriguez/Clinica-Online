@@ -1,0 +1,155 @@
+<div class="form-container">
+  <h2>Registrar</h2>
+
+  <div class="botones-container" *ngIf="registroUsuario===false && registroEspecialista===false">
+    <button class="boton-formularios" (click)="registrarUsuario()"><img src="assets/iconos/agregar-usuario.png" alt="Usuario" class="icono">Usuario</button>
+  </div>
+  <div class="botones-container" *ngIf="registroUsuario===false && registroEspecialista===false">
+    <button class="boton-formularios" (click)="registrarEspecialista()"><img src="/assets/iconos/doctor.png" alt="Especialista" class="icono">Especialista</button>
+  </div>
+  
+
+  <form [@fadeIn] [formGroup]="usuarioForm" *ngIf="registroUsuario===true" (ngSubmit)="enviarUsuario()">
+
+    <div class="campo">
+      <label>Nombre</label>
+      <input type="text" formControlName="nombre" placeholder="Nombre">
+    </div>
+
+    <div class="campo">
+      <label>Apellido</label>
+      <input type="text" formControlName="apellido" placeholder="Apellido">
+    </div>
+
+    <div class="campo">
+      <label>Edad</label>
+      <input type="number" formControlName="edad" placeholder="Edad">
+    </div>
+
+    <div class="campo">
+      <label>Dni</label>
+      <input type="number" formControlName="dni" placeholder="Dni">
+    </div>
+
+    <div class="campo">
+      <label>Obra Social</label>
+      <input type="text" formControlName="obraSocial" placeholder="Obra Social">
+    </div>
+
+    <div class="campo">
+      <label>Mail</label>
+      <input type="text" formControlName="mail" placeholder="Mail">
+    </div>
+
+    <div class="campo">
+      <label>Contraseña</label>
+      <input type="text" formControlName="contrasena" placeholder="Contraseña">
+    </div>
+
+    <div class="campo">
+      <label for="fotos">Fotos de perfil (2 imágenes): </label>
+      <input 
+        type="file" 
+        id="fotos" 
+        (change)="onFileSelected($event, 'usuario')" 
+        accept="image/*" 
+        multiple
+      />
+    </div>
+    
+    <div *ngIf="previsualizarUrls.length > 0" class="preview-container">
+      <p>Previsualización:</p>
+      <div class="preview">
+        <img
+          *ngFor="let url of previsualizarUrls; let i = index"
+          [src]="url"
+          [alt]="'Imagen ' + (i + 1)"
+          class="preview-img"
+        />
+      </div>
+    </div>
+    
+    <button type="submit">Enviar</button>
+
+  </form>
+
+  <form [@fadeIn] [formGroup]="especialistaForm" *ngIf="registroEspecialista===true" (ngSubmit)="enviarEspecialista()">
+
+    <div class="campo">
+      <label>Nombre</label>
+      <input type="text" formControlName="nombre" placeholder="Nombre">
+    </div>
+
+    <div class="campo">
+      <label>Apellido</label>
+      <input type="text" formControlName="apellido" placeholder="Apellido">
+    </div>
+
+    <div class="campo">
+      <label>Edad</label>
+      <input type="number" formControlName="edad" placeholder="Edad">
+    </div>
+
+    <div class="campo">
+      <label>Dni</label>
+      <input type="number" formControlName="dni" placeholder="Dni">
+    </div>
+
+    <div class="campo">
+      <label>Mail</label>
+      <input type="text" formControlName="mail" placeholder="Mail">
+    </div>
+
+    <div class="campo">
+      <label>Contraseña</label>
+      <input type="text" formControlName="contrasena" placeholder="Contraseña">
+    </div>
+
+    <div class="campo">
+        <label>Especialidades:</label>
+        <div *ngFor="let esp of especialidades" class="checkbox-item">
+          <input
+            type="checkbox"
+            [value]="esp"
+            (change)="onCheckboxChange($event)"
+            [checked]="especialidadesSeleccionadas.includes(esp)"
+          />
+          {{ esp }}
+        </div>
+    </div>
+    <div class="mt-2 agregar-especialidad">
+      <input
+      type="text"
+      formControlName="nuevaEspecialidad"
+      placeholder="Agregar nueva especialidad"
+      />
+    </div>
+    <button type="button" (click)="agregarEspecialidad()">Agregar</button>
+
+    <div class="campo">
+      <label for="fotos">Foto de perfil: </label>
+      <input 
+        type="file" 
+        id="fotos" 
+        (change)="onFileSelected($event, 'especialista')" 
+        accept="image/*" 
+      />
+    </div>
+    
+    <div *ngIf="previsualizarUrls.length > 0" class="preview-container">
+      <p>Previsualización:</p>
+      <div class="preview">
+        <img
+          *ngFor="let url of previsualizarUrls; let i = index"
+          [src]="url"
+          [alt]="'Imagen ' + i"
+          class="preview-img"
+        />
+      </div>
+    </div>
+
+    <button type="submit">Registrar Especialista</button>
+
+  </form>
+  <button *ngIf="registroUsuario===true || registroEspecialista===true" (click)="volver()">Volver</button>
+</div>

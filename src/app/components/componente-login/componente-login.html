@@ -1,0 +1,40 @@
+<div class="form-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="usuarioForm" (ngSubmit)="enviar()">
+
+    <div class="campo">
+      <label>Mail</label>
+      <input type="text" formControlName="mail" placeholder="Mail">
+    </div>
+
+    <div class="campo">
+      <label>Contraseña</label>
+      <input type="text" formControlName="contrasena" placeholder="Contraseña">
+    </div>
+
+    <button type="submit">Ingresar</button>
+  </form>
+
+  
+
+  
+  <div class="fab-container">
+    <button class="fab-button" type="button" (click)="toggleFab()">
+      Ingresar Usuarios
+    </button>
+
+    <div class="fab-options" *ngIf="fabAbierto" @fabList>
+      <button
+        *ngFor="let u of usuariosDemo"
+        class="fab-item"
+        type="button"
+        (click)="loginRapido(u)"
+        @fabItem
+      >
+
+        <img [src]="u.foto" [alt]="u.nombre" />
+      </button>
+    </div>
+  </div>
+</div>

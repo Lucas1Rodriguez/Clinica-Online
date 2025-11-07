@@ -1,0 +1,98 @@
+label, p{
+  color:lightcoral;
+  font-weight: bold;
+}
+
+h2 {
+  font-weight: bold;
+  text-align: center;
+  color: #2aebff;
+}
+
+.campo {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 15px auto;
+  padding: 24px;
+  border-radius: 12px;
+  background: #0B1C4C;
+}
+
+.campo {
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 6px 8px;
+  margin-top: 4px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button{
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: bold;
+  background: #FACC15;
+  color: #0B1C4C;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.preview-container {
+  margin-top: 10px;
+}
+
+.preview {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preview-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.botones-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+  
+}
+
+.boton-formularios {
+  padding: 10px 20px;
+  border: none;
+  background: #FACC15;
+  color: blueviolet;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.icono {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 7px;
+  filter: drop-shadow(0 0 6px blueviolet);
+}

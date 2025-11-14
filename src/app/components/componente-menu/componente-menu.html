@@ -1,7 +1,20 @@
 <div class="navbar">
-    <a routerLink="/home">Home</a>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/registrar">Registrarse</a>
-    <!--<a routerLink="/login" (click)="cerrarSesion()">Cerrar Sesión</a>-->
+    
+  <a *ngIf="!estaLogueado" routerLink="/login">Login</a>
+  <a *ngIf="!estaLogueado" routerLink="/registro">Registrarse</a>
+
+  <a *ngIf="estaLogueado" routerLink="/home">Home</a>
+
+  <a *ngIf="rolActual === 'especialista'" routerLink="/mis-turnos-especialista">Mis turnos</a>
+  <a *ngIf="rolActual === 'especialista'" routerLink="/mi-perfil-especialista">Mi Perfil</a>
+
+  <a *ngIf="rolActual === 'paciente'" routerLink="/mis-turnos-usuario">Mis turnos</a>
+  <a *ngIf="rolActual === 'paciente'" routerLink="/mi-perfil-usuarios">Mi Perfil</a>
+  <a *ngIf="rolActual === 'paciente'" routerLink="/solicitar-turno">Solicitar Turno</a>
+
+  <a *ngIf="rolActual === 'admin'" routerLink="/turnos-admin">Turnos</a>
+  <a *ngIf="rolActual === 'admin'" routerLink="/mi-perfil-admin">Mi Perfil</a>
+
+  <a *ngIf="estaLogueado" (click)="cerrarSesion()">Cerrar Sesión</a>
 </div>
 

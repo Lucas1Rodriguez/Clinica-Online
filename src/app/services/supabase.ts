@@ -43,7 +43,6 @@ export class Supabase {
         const { data, error } = await this.supabase
             .from('Perfiles')
             .select('usuario,rol')
-            
             .eq('id', id)
             .single();
 
@@ -80,5 +79,42 @@ export class Supabase {
         return this.supabase
         .from('Perfiles')
         .insert([{ id, usuario, correo }]);
-}
+    }
+
+    async getHorariosEspecialista(id: string) {
+        const { data, error } = await this.supabase
+            .from('especialistas')
+            .select('horarios')
+            .eq('id', id)
+            .single();
+
+        return data?.horarios || [];
+    }
+
+    async agregarHorario(especialistaId: string, horario: any) {
+        const horariosActuales = await this.getHorariosEspecialista(especialistaId);
+
+        const nuevosHorarios = [...horariosActuales, horario];
+
+        const { error } = await this.supabase
+            .from('especialistas')
+            .update({ horarios: nuevosHorarios })
+            .eq('id', especialistaId);
+
+        return error ? null : horario;
+    }
+
+    async eliminarHorario(especialistaId: string, index: number) {
+
+        const horariosActuales = await this.getHorariosEspecialista(especialistaId);
+
+        horariosActuales.splice(index, 1);
+
+        await this.supabase
+            .from('especialistas')
+            .update({ horarios: horariosActuales })
+            .eq('id', especialistaId);
+
+        return true;
+    }
 }

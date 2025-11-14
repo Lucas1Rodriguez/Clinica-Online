@@ -1,0 +1,21 @@
+<div class="form-container">
+
+  <h2>Mi Perfil</h2>
+
+  <div class="info">
+
+    <img *ngIf="perfil.fotos.length > 0"
+         [src]="perfil.fotos[0]"
+         class="foto-perfil">
+
+    <div *ngIf="perfil.fotos.length === 0" class="foto-placeholder">
+      Sin foto
+    </div>
+
+    <p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ perfil.apellido }}</p>
+    <p><strong>Obra Social:</strong> {{ perfil.obraSocial }}</p>
+    <p><strong>Email:</strong> {{ perfil.mail }}</p>
+
+  </div>
+</div>

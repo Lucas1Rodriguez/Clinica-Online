@@ -1,0 +1,30 @@
+<div class="cargando" *ngIf="cargando">Cargando tus turnos...</div>
+
+<input type="text" placeholder="Filtrar por paciente o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
+
+<div class="noTurnos" *ngIf="!cargando && turnosFiltrados.length === 0">
+    No tenés turnos registrados.
+</div>
+
+<div *ngFor="let turno of turnosFiltrados" class="form-container">
+    <p><b>Especialidad:</b> {{ turno.especialidad }}</p>
+    <p><b>Especialista:</b> {{ turno.especialistaNombre }}</p>
+    <p><b>Fecha:</b> {{ turno.fecha }}</p>
+    <p><b>Hora:</b> {{ turno.hora }}</p>
+    <p>
+        <b>Estado:</b>
+            <span [ngClass]="{
+                'estado-pendiente': turno.estado === 'Pendiente',
+                'estado-cancelado': turno.estado === 'Cancelado',
+                'estado-realizado': turno.estado === 'Realizado'
+            }">
+                {{ turno.estado }}
+            </span>
+    </p>
+
+    <div class="acciones">
+    <button *ngIf="turno.estado === 'Pendiente'" (click)="cancelarTurno(turno)">Cancelar</button>
+    <button *ngIf="turno.estado === 'Realizado' && !turno.resena" (click)="calificarTurno(turno)">Calificar</button>
+    </div>
+
+</div>

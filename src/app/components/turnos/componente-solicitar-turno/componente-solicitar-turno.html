@@ -1,0 +1,42 @@
+<div class="cargando" *ngIf="cargando">Cargando...</div>
+
+<div class="form-container" *ngIf="!cargando">
+  <label>Especialidad:</label>
+  <select (change)="seleccionarEspecialidad($any($event.target).value)">
+    <option value="">--Seleccione--</option>
+    <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+  </select>
+
+  <label>Especialista:</label>
+  <select (change)="seleccionarEspecialista($any($event.target).value)" [disabled]="!especialidadSeleccionada">
+    <option value="">--Seleccione--</option>
+    <option *ngFor="let e of especialistasFiltrados" [value]="e.id">{{ e.nombre }}</option>
+  </select>
+
+  <div *ngIf="rol === 'admin'">
+    <label>Paciente:</label>
+    <select [(ngModel)]="pacienteSeleccionado">
+      <option value="">--Seleccione--</option>
+      <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nombre }}</option>
+    </select>
+  </div>
+
+  <label>Día:</label>
+  <select [(ngModel)]="diaSeleccionado" (ngModelChange)="seleccionarDia($event)" [disabled]="!especialistaSeleccionado">
+    <option value="">--Seleccione--</option>
+    <option *ngFor="let dia of diasDisponibles" [ngValue]="dia">
+        {{ dia | date:'fullDate' }}
+    </option>
+  </select>
+
+  <label>Hora:</label>
+  <select [(ngModel)]="horaSeleccionada" [disabled]="!diaSeleccionado">
+    <option value="">--Seleccione--</option>
+    <option *ngFor="let h of horasDisponibles">{{ h }}</option>
+  </select>
+
+  <button (click)="solicitarTurno()"
+          [disabled]="!especialidadSeleccionada || !especialistaSeleccionado || !diaSeleccionado || !horaSeleccionada">
+    Solicitar Turno
+  </button>
+</div>

@@ -1,0 +1,89 @@
+.form-container {
+  width: 600px;
+  margin: 20px auto;
+  padding: 22px 28px;
+  border-radius: 14px;
+  background: #0b1c4c;
+  color: #f1f1f1;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border-left: 6px solid #00c2ff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.form-container p {
+  margin: 8px 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.form-container b {
+  color: #00c2ff;
+  font-weight: 600;
+}
+
+
+.acciones {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.acciones button {
+  background-color: #00c2ff;
+  color: #0b1c4c;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.acciones button:hover {
+  background-color: #02b0e6;
+  transform: scale(1.03);
+}
+
+.acciones button:active {
+  transform: scale(0.97);
+}
+
+/* Estados destacados */
+.estado-pendiente {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.estado-cancelado {
+  color: #ff5252;
+  font-weight: 600;
+}
+
+.estado-realizado {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.noTurnos {
+  text-align: center;
+  color: #02b0e6;
+  margin-top: 60px;
+  font-size: 40px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.cargando{
+  text-align: center;
+  color: #02b0e6;
+  margin-top: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  font-style: italic;
+}

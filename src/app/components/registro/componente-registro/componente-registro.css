@@ -1,0 +1,59 @@
+label, p{
+  color:lightcoral;
+  font-weight: bold;
+}
+
+h2 {
+  font-weight: bold;
+  text-align: center;
+  color: #2aebff;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 15px auto;
+  padding: 24px;
+  border-radius: 12px;
+  background: #0B1C4C;
+}
+
+.botones-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+  
+}
+
+button{
+  font-family: 'Press Start 2P', system-ui;
+  font-weight: bold;
+  background: #FACC15;
+  color: #0B1C4C;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+
+.boton-formularios {
+  padding: 10px 20px;
+  border: none;
+  background: #FACC15;
+  color: blueviolet;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.icono {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 7px;
+  filter: drop-shadow(0 0 6px blueviolet);
+}

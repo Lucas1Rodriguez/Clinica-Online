@@ -55,26 +55,28 @@ export class ComponenteLogin {
   { nombre: 'Mario', mail: 'jolecor511@fantastu.com', pass: 'Contraseña1234', foto: '' },
   { nombre: 'Lorenzo', mail: 'lirodav141@wivstore.com', pass: 'Sanlorenzo1908', foto: '' },
   { nombre: 'Bartolome', mail: 'kemak23337@fantastu.com', pass: 'Barto12345', foto: '' },
-  { nombre: 'Admin', mail: 'lucas.rodriguez.lr03@gmail.com', pass: '12345678', foto: '' }
+  { nombre: 'Admin', mail: 'luks.rodriguez.03@gmail.com', pass: '12345678', foto: '' }
   ];
   fabAbierto = false;
 
   async ngOnInit() {
     try {
-      const [usuarios, especialistas] = await Promise.all([
+      const [usuarios, especialistas, admins] = await Promise.all([
         
         this.supabaseService.getCliente().from('usuarios').select('mail,fotos'),
         this.supabaseService.getCliente().from('especialistas').select('mail, fotos'),
-        //this.supabaseService.getCliente().from('admins').select('mail, fotos')
+        this.supabaseService.getCliente().from('admins').select('mail, fotos')
       ]);
 
       console.log('Usuarios:', usuarios.data);
       console.log('Especialistas:', especialistas.data);
+      console.log('Admins:', admins.data);
+
 
       const todos = [
         ...(usuarios.data || []),
         ...(especialistas.data || []),
-        //...(admins.data || [])
+        ...(admins.data || [])
       ];
 
       this.usuariosDemo = this.usuariosDemo.map(u => {
@@ -94,7 +96,7 @@ export class ComponenteLogin {
 
     this.usuarioForm = this.fb.group({
       mail: ['', [Validators.required,Validators.email]],
-      contrasena: ['', Validators.required, Validators.maxLength(15)]
+      contrasena: ['', [Validators.required, Validators.maxLength(15)]]
     });
   }
 
@@ -102,6 +104,11 @@ export class ComponenteLogin {
   async enviar() {
     if (this.usuarioForm.valid) {
 
+      this.usuario = {
+      mail: this.usuarioForm.value.mail,
+      pass: this.usuarioForm.value.contrasena,
+      nombre: this.usuariosDemo.find(u => u.mail === this.usuarioForm.value.mail)?.nombre ?? 'Usuario'
+      };
 
       try {
         const { error } = await this.supabaseService.login(this.usuario.mail, this.usuario.pass);

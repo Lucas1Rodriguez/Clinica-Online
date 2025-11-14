@@ -1,0 +1,62 @@
+<div class="form-container">
+
+  <h2>Mi Perfil</h2>
+
+  <div *ngIf="especialista">
+
+    <img class="foto-perfil" [src]="especialista.fotos" alt="foto">
+    <p><strong>Nombre:</strong> {{ especialista.nombre }}</p>
+    <p><strong>Correo:</strong> {{ user?.email }}</p>
+    <p><strong>Especialidad:</strong> {{ especialista.especialidades }}</p>
+
+    <hr>
+
+    <h3>Mis horarios</h3>
+
+    <div class="form-row">
+      <label>Día:</label>
+      <select [(ngModel)]="nuevoDia">
+        <option value="">Selecciona...</option>
+        <option *ngFor="let d of dias" [value]="d">{{ d }}</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label>Hora inicio:</label>
+      <input type="time" [(ngModel)]="horaInicio">
+    </div>
+
+    <div class="form-row">
+      <label>Hora fin:</label>
+      <input type="time" [(ngModel)]="horaFin">
+    </div>
+
+    <button (click)="agregar()" class="btn-add">Agregar horario</button>
+
+    <hr>
+
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Día</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let h of horarios; let i = index">
+          <td>{{ h.dia }}</td>
+          <td>{{ h.hora_inicio }}</td>
+          <td>{{ h.hora_fin }}</td>
+          <td>
+            <button class="btn-delete" (click)="borrar(i)">X</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

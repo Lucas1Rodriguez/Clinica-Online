@@ -1,0 +1,16 @@
+<div class="form-container">
+  <h2>Registrar</h2>
+
+  <div *ngIf="mostrarBotones" class="botones-container">
+    <button class="boton-formularios" (click)="registrarUsuario()"><img src="assets/iconos/agregar-usuario.png" alt="Usuario" class="icono">Usuario</button>
+  </div>
+  <div *ngIf="mostrarBotones" class="botones-container">
+    <button class="boton-formularios" (click)="registrarEspecialista()"><img src="/assets/iconos/doctor.png" alt="Especialista" class="icono">Especialista</button>
+  </div>
+  <div *ngIf="mostrarBotones" class="botones-container">
+    <button class="boton-formularios" (click)="registrarAdmin()"><img src="/assets/iconos/doctor.png" alt="Especialista" class="icono">Especialista</button>
+  </div>
+  
+  <router-outlet></router-outlet>
+
+</div>

@@ -1,0 +1,66 @@
+.form-container {
+  width: 600px;
+  margin: 20px auto;
+  padding: 22px 28px;
+  border-radius: 14px;
+  background: #0b1c4c;
+  color: #f1f1f1;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border-left: 6px solid #00c2ff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-row {
+  margin: 10px 0;
+}
+
+.form-row label {
+  display: block;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.btn-add {
+  margin-top: 10px;
+  background: #0066ff;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 8px;
+  cursor: pointer;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabla th, .tabla td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+
+.foto-perfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}

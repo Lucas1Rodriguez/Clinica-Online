@@ -1,0 +1,60 @@
+<div class="form-container">
+ 
+    <form [@fadeIn] [formGroup]="adminForm" (ngSubmit)="enviarAdmin()">
+
+        <div class="campo">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" placeholder="Nombre">
+        </div>
+
+        <div class="campo">
+            <label>Apellido</label>
+            <input type="text" formControlName="apellido" placeholder="Apellido">
+        </div>
+
+        <div class="campo">
+            <label>Edad</label>
+            <input type="number" formControlName="edad" placeholder="Edad">
+        </div>
+
+        <div class="campo">
+            <label>Dni</label>
+            <input type="number" formControlName="dni" placeholder="Dni">
+        </div>
+
+        <div class="campo">
+            <label>Mail</label>
+            <input type="text" formControlName="mail" placeholder="Mail">
+        </div>
+
+        <div class="campo">
+            <label>Contraseña</label>
+            <input type="text" formControlName="contrasena" placeholder="Contraseña">
+        </div>
+
+        <div class="campo">
+            <label for="fotos">Foto de perfil: </label>
+            <input 
+            type="file" 
+            id="fotos" 
+            (change)="onFileSelected($event)" 
+            accept="image/*" 
+            />
+        </div>
+
+        <div *ngIf="previsualizarUrls.length > 0" class="preview-container">
+            <p>Previsualización:</p>
+            <div class="preview">
+            <img
+                *ngFor="let url of previsualizarUrls; let i = index"
+                [src]="url"
+                [alt]="'Imagen ' + (i + 1)"
+                class="preview-img"
+            />
+            </div>
+        </div>
+
+        <button type="submit">Enviar</button>
+        <button (click)="volver()">Volver</button>
+    </form>
+</div> 

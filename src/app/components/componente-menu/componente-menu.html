@@ -9,10 +9,11 @@
   <a *ngIf="rolActual === 'especialista'" routerLink="/mi-perfil-especialista">Mi Perfil</a>
 
   <a *ngIf="rolActual === 'paciente'" routerLink="/mis-turnos-usuario">Mis turnos</a>
-  <a *ngIf="rolActual === 'paciente'" routerLink="/mi-perfil-usuarios">Mi Perfil</a>
   <a *ngIf="rolActual === 'paciente'" routerLink="/solicitar-turno">Solicitar Turno</a>
+  <a *ngIf="rolActual === 'paciente'" routerLink="/mi-perfil-usuarios">Mi Perfil</a>
 
   <a *ngIf="rolActual === 'admin'" routerLink="/turnos-admin">Turnos</a>
+  <a *ngIf="rolActual === 'admin'" routerLink="/registro/admin">Registrar Administrador</a>
   <a *ngIf="rolActual === 'admin'" routerLink="/mi-perfil-admin">Mi Perfil</a>
 
   <a *ngIf="estaLogueado" (click)="cerrarSesion()">Cerrar Sesión</a>

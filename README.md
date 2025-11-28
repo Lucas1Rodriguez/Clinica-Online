@@ -18,7 +18,7 @@ Una vez dentro de la pagina se encuentra la home y a partir del menú según el 
 
 El paciente puede ingresar a Mis turnos, Solicitar Turnos, Mi perfil o cerrar sesión. 
 
-* Dentro de mis turnos podrá ver todos sus turnos pendientes, realizados, aceptados y podrá filtrar por especialidad, especialista y su historia clinica.
+* Dentro de mis turnos podrá ver todos sus turnos pendientes, realizados, aceptados y podrá filtrar por especialidad, especialista y los datos de su historia clinica.
 
 * Dentro de solicitar turno podrá elegir el especialista con quien quiere el turno, la especialidad de este mismo, un día y un horario.
 
@@ -29,7 +29,7 @@ El paciente puede ingresar a Mis turnos, Solicitar Turnos, Mi perfil o cerrar se
 
 El especialista puede ingresar a Mis Turnos, Pacientes, Mi perfil o cerrar sesión.
 
-* Dentro de mis turnos podrá ver todos sus turnos pendientes, realizados, aceptados, cancelados o rechazados y podrá filtrar por especialidad, especialista y la historia clinica de los turnos.
+* Dentro de mis turnos podrá ver todos sus turnos pendientes, realizados, aceptados, cancelados o rechazados y podrá filtrar por especialidad, especialista y los datos de la historia clinica de los turnos.
 * Dentro de pacientes podrá ver a todos los pacientes que haya atendido al menos una vez y revisar su historia medica.
 * Dentro de mi perfil podrá ver sus datos como su foto, nombre, mail, especialidades y podrá seleccionar sus horarios de trabajo.
 * Cerrar Sesión lo devolverá al login.

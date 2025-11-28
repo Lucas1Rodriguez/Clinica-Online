@@ -1,0 +1,37 @@
+<div class="contenedor">
+  
+  <div *ngIf="cargando" class="loading">Cargando usuarios...</div>
+  
+  <div *ngIf="!cargando">
+    <h2>Usuarios del sistema</h2>
+
+    <div class="excelContainer">
+      <button class="btn" (click)="descargarExcel()">
+        Descargar Excel de datos de usuarios
+      </button>
+    </div>
+    
+
+    <div class="card-container">
+      <div class="card" *ngFor="let u of usuarios" (click)="descargarExcelPaciente(u)">
+        <img [src]="u.fotos?.[0] || 'assets/default.png'" class="foto">
+        <h4>{{ u.nombre | capitalizar }} {{ u.apellido | capitalizar }}</h4>
+        <p>{{ u.mail }}</p>
+        <p><b>Rol:</b> {{ u.rol | rolLabel }}</p>
+        <span *ngIf="u.rol === 'especialista'">
+          {{ u.habilitado ? 'Habilitado' : 'Inhabilitado' }}
+        </span>
+        <span *ngIf="u.rol !== 'especialista'">
+          —
+        </span>
+        <br>
+        <button 
+          *ngIf="u.rol === 'especialista'" 
+          class="btn"
+          [class.habilitado]="u.habilitado"
+          (click)="cambiarEstado(u)">
+          {{ u.habilitado ? 'Inhabilitar' : 'Habilitar' }}
+        </button>
+      </div>
+    </div>
+  </div>

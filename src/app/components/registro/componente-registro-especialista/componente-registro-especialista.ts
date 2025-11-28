@@ -57,6 +57,13 @@ export class ComponenteRegistroEspecialista {
       const {nombre, apellido, edad, dni, mail, contrasena, especialidades, fotos } = this.especialistaForm.value;
 
       try{
+
+        const existente = await this.supabaseService.obtenerUsuarioPorEmail(mail);
+        if (existente) {
+          Swal.fire('Error', 'Este correo ya está registrado en el sistema.', 'error');
+          return;
+        }
+
         const { data, error } = await this.supabaseService.registrarse( mail, contrasena);
 
         if (error) throw error;

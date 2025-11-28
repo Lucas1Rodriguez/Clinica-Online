@@ -1,9 +1,7 @@
 <div class="form-container">
-
   <h2>Mi Perfil</h2>
 
   <div class="info">
-
     <img *ngIf="perfil.fotos.length > 0"
          [src]="perfil.fotos[0]"
          class="foto-perfil">
@@ -16,6 +14,17 @@
     <p><strong>Apellido:</strong> {{ perfil.apellido }}</p>
     <p><strong>Obra Social:</strong> {{ perfil.obraSocial }}</p>
     <p><strong>Email:</strong> {{ perfil.mail }}</p>
+  </div>
 
+  <div class="historial-pdf">
+    <label for="especialidad"><strong>Seleccionar especialidad:</strong></label>
+    <select id="especialidad" [(ngModel)]="especialidadSeleccionada">
+      <option value="">-- Selecciona --</option>
+      <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+    </select>
+
+    <button (click)="descargarPDF()" [disabled]="!especialidadSeleccionada">
+      Descargar PDF
+    </button>
   </div>
 </div>

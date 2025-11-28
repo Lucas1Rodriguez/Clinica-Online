@@ -1,39 +1,88 @@
 <div class="cargando" *ngIf="cargando">Cargando...</div>
 
 <div class="form-container" *ngIf="!cargando">
-  <label>Especialidad:</label>
-  <select (change)="seleccionarEspecialidad($any($event.target).value)">
-    <option value="">--Seleccione--</option>
-    <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
-  </select>
-
-  <label>Especialista:</label>
-  <select (change)="seleccionarEspecialista($any($event.target).value)" [disabled]="!especialidadSeleccionada">
-    <option value="">--Seleccione--</option>
-    <option *ngFor="let e of especialistasFiltrados" [value]="e.id">{{ e.nombre }}</option>
-  </select>
 
   <div *ngIf="rol === 'admin'">
     <label>Paciente:</label>
-    <select [(ngModel)]="pacienteSeleccionado">
-      <option value="">--Seleccione--</option>
-      <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nombre }}</option>
+    <select [(ngModel)]="pacienteSeleccionado" (change)="cambiarPaciente()">
+      <option [ngValue]="null">--Seleccione--</option>
+      <option *ngFor="let p of pacientes" [ngValue]="p">
+        {{ p.nombre }}
+      </option>
     </select>
   </div>
 
-  <label>Día:</label>
-  <select [(ngModel)]="diaSeleccionado" (ngModelChange)="seleccionarDia($event)" [disabled]="!especialistaSeleccionado">
-    <option value="">--Seleccione--</option>
-    <option *ngFor="let dia of diasDisponibles" [ngValue]="dia">
-        {{ dia | date:'fullDate' }}
-    </option>
-  </select>
+  <div class="especialistas-grid" *ngIf="especialistas && especialistas.length > 0">
 
-  <label>Hora:</label>
-  <select [(ngModel)]="horaSeleccionada" [disabled]="!diaSeleccionado">
-    <option value="">--Seleccione--</option>
-    <option *ngFor="let h of horasDisponibles">{{ h }}</option>
-  </select>
+    <div 
+      class="especialista-card" 
+      *ngFor="let e of especialistas" 
+      [class.selected]="especialistaSeleccionado?.id === e.id"
+      (click)="seleccionarEspecialista(e)"
+    >
+      <div class="nombre">{{ e.nombre | capitalizar }}</div>
+      <img 
+        class="avatar" 
+        [src]="e.fotos" 
+        alt="foto especialista"
+      />
+    </div>
+
+  </div>
+
+  <div class="especialidades-grid" *ngIf="rol === 'admin' && pacienteSeleccionado && especialistaSeleccionado">
+
+      <div 
+        class="especialidad-card"
+        *ngFor="let esp of especialidades"
+        (click)="seleccionarEspecialidad(esp)"
+      >
+          <img 
+            [src]="especialidadImagenes[esp] || especialidadImagenes['default']"
+            alt="{{esp}}"
+          >
+          <p>{{ esp }}</p>
+      </div>
+  </div>
+
+  <div *ngIf="rol === 'paciente' && especialistaSeleccionado" class="especialidades-grid">
+    <div 
+      class="especialidad-card"
+      *ngFor="let esp of especialidades"
+      (click)="seleccionarEspecialidad(esp)"
+    >
+        <img 
+          [src]="especialidadImagenes[esp] || especialidadImagenes['default']"
+          alt="{{esp}}"
+        >
+        <p>{{ esp }}</p>
+    </div>
+
+  </div>
+
+  <div *ngIf="especialidadSeleccionada" class="dias-grid">
+
+    <div class="dia-card"
+        *ngFor="let dia of diasDisponibles"
+        (click)="seleccionarDia(dia)"
+        [class.selected]="diaSeleccionado?.toDateString() === dia.toDateString()">
+
+      <p>{{ dia | date:'EEEE' }}</p>
+      <span>{{ dia | date:'dd/MM' }}</span>
+    </div>
+
+  </div>
+
+  <div class="horas-grid" *ngIf="diaSeleccionado">
+
+    <div class="hora-card"
+        *ngFor="let h of horasDisponibles"
+        (click)="horaSeleccionada = h"
+        [class.selected]="horaSeleccionada === h">
+      {{ h }}
+    </div>
+
+  </div>
 
   <button (click)="solicitarTurno()"
           [disabled]="!especialidadSeleccionada || !especialistaSeleccionado || !diaSeleccionado || !horaSeleccionada">

@@ -1,0 +1,27 @@
+<div class="turnos-dia-container">
+  <h3>Turnos por Día</h3>
+
+  <div class="grafico-container">
+    <canvas id="graficoDias"></canvas>
+  </div>
+
+  <div class="botones">
+    <button (click)="exportarExcelDias()">Exportar Excel</button>
+    <button (click)="exportarPDFDias()">Exportar PDF</button>
+  </div>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Cantidad de Turnos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of datosDias" highlightHover highlightColor="#557ff3">
+        <td>{{ item.dia }}</td>
+        <td>{{ item.cantidad }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

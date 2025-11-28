@@ -1,9 +1,11 @@
 label, p{
-  color:lightcoral;
+  color: #4fd3e4;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: bold;
 }
 
 h2 {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   text-align: center;
   color: #2aebff;

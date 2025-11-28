@@ -1,38 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Supabase } from '../../services/supabase';
+import { MostrarSiRolDirective } from '../../directivas/directivaMostrarSiRol';
+import { NoEnRutaDirective } from '../../directivas/directivaNoEnRuta';
 
 @Component({
   selector: 'app-componente-menu',
-  imports: [RouterLink, CommonModule],
+  standalone: true,
+  imports: [RouterLink, CommonModule, MostrarSiRolDirective, NoEnRutaDirective],
   templateUrl: './componente-menu.html',
   styleUrl: './componente-menu.css',
 })
 export class ComponenteMenu implements OnInit{
 
- usuarioId: string | null = null;
+  usuarioId: string | null = null;
   rolActual: 'paciente' | 'especialista' | 'admin' | null = null;
 
-  constructor(private supabase: Supabase, private router: Router) {}
+  constructor(private supabase: Supabase, private router: Router, private cd: ChangeDetectorRef) {}
 
   async ngOnInit() {
-    const session = await this.supabase.getSession();
+    await this.supabase.restaurarSesion();
 
-    if (session?.user) {
-      this.usuarioId = session.user.id;
-    } else {
-      const user = await this.supabase.obtenerUsuario();
-      this.usuarioId = user?.id ?? null;
-    }
+    this.supabase.usuarioId$.subscribe(id => {
+      this.usuarioId = id;
 
-    if (this.usuarioId) {
-      console.log('Usuario logueado:', this.usuarioId);
-      await this.cargarRol();
-    }
+      if (id) {
+        this.cargarRol();
+      } else {
+        this.rolActual = null;
+      }
+    });
+
+    this.supabase.rolActual$.subscribe(rol => {
+      this.rolActual = rol;
+    });
+
   }
 
-  get estaLogueado(): boolean {
+  get estaLogueado() {
     return !!this.usuarioId;
   }
 
@@ -47,6 +53,7 @@ export class ComponenteMenu implements OnInit{
 
     if (esp) {
       this.rolActual = "especialista";
+      this.supabase.rolActual$.next("especialista");
       return;
     }
 
@@ -58,6 +65,7 @@ export class ComponenteMenu implements OnInit{
 
     if (pac) {
       this.rolActual = "paciente";
+      this.supabase.rolActual$.next("paciente");
       return;
     }
 
@@ -69,14 +77,18 @@ export class ComponenteMenu implements OnInit{
 
     if (admin) {
       this.rolActual = "admin";
+      this.supabase.rolActual$.next("admin");
       return;
     }
   }
 
-  async cerrarSesion() {
-    await this.supabase.cerrarSesion();
-    this.usuarioId = null;
-    this.rolActual = null;
+  EstaEnComponente(ruta: string): boolean {
+    return this.router.url === ruta;
+  }
+
+    cerrarSesion() {
+    this.supabase.cerrarSesion();
     this.router.navigate(['/login']);
   }
+
 }

@@ -111,17 +111,25 @@ export class ComponenteLogin {
       };
 
       try {
+
+        const datos = await this.supabaseService.obtenerUsuarioPorEmail(this.usuario.mail);
+
+        if (datos?.rol === 'especialista' && !datos.habilitado) {
+          Swal.fire('Acceso denegado', 'Tu cuenta de especialista está inhabilitada.', 'error');
+          return;
+        }
+
         const { error } = await this.supabaseService.login(this.usuario.mail, this.usuario.pass);
         if (error) throw error;
 
-      Swal.fire({
-        icon: 'success',
-        title: `¡Bienvenido, ${this.usuario.nombre}!`,
-        timer: 1200,
-        showConfirmButton: false
-      });
+        Swal.fire({
+          icon: 'success',
+          title: `¡Bienvenido, ${this.usuario.nombre}!`,
+          timer: 1200,
+          showConfirmButton: false
+        });
 
-      this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/home");
     } catch (err) {
       console.error('Error al iniciar sesión:', err);
       Swal.fire('Error', 'No se pudo iniciar sesión.', 'error');
@@ -174,6 +182,14 @@ export class ComponenteLogin {
 
   async loginRapido(usuario: any) {
     try {
+
+      const datos = await this.supabaseService.obtenerUsuarioPorEmail(usuario.mail);
+
+      if (datos?.rol === 'especialista' && !datos.habilitado) {
+        Swal.fire('Acceso denegado', 'Tu cuenta de especialista está inhabilitada.', 'error');
+        return;
+      }
+
       const { error } = await this.supabaseService.login(usuario.mail, usuario.pass);
       if (error) throw error;
 

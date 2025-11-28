@@ -10,10 +10,31 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.info {
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #02b0e6;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
 .foto-perfil {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 10px;
+  border: 2px solid #02b0e6;
+}
+
+.foto-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-weight: bold;
+  font-size: 14px;
+  border: 2px solid #02b0e6;
 }

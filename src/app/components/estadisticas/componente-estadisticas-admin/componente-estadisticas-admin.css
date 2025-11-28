@@ -1,0 +1,29 @@
+.estadisticas-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.estadisticas-buttons button {
+  background-color: #0B1C4C;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  flex: 1 1 220px;
+}
+
+.estadisticas-buttons button:hover {
+  background-color: #1a41aa;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.estadisticas-buttons button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

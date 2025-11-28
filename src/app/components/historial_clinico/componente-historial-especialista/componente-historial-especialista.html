@@ -1,0 +1,63 @@
+<div class="cargando" *ngIf="cargando">Cargando usuarios...</div>
+
+<div *ngIf="!cargando && pacientesUnicos.length === 0" class="vacio">
+  No hay ingresos registrados.
+</div>
+
+<div *ngIf="!cargando && modo === 'lista'">
+
+  <h2>Pacientes atendidos</h2>
+  <div class="container">
+
+    <div *ngFor="let p of pacientesUnicos" class="paciente-card">
+
+      <h3>{{ p.nombre }} {{ p.apellido }}</h3>
+
+      <div class="ultimos-turnos">
+
+        <h4>Últimos turnos</h4>
+
+        <div *ngIf="p.ultimosTurnos?.length > 0; else sinTurnos">
+          <div *ngFor="let t of p.ultimosTurnos" class="turno-item">
+            <span class="fecha">{{ t.fecha | date:'dd/MM/yyyy' }}</span>
+            <span class="hora">{{ t.hora }}</span>
+            <span class="especialidad">{{ t.especialidad }}</span>
+          </div>
+        </div>
+
+        <ng-template #sinTurnos>
+          <p class="no-turnos">No hay turnos previos.</p>
+        </ng-template>
+
+      </div>
+
+      <button class="btn-ver" (click)="verHistoria(p.id)">Ver historia clínica</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="cargando" *ngIf="cargandoHistorial">Cargando historia clínica...</div>
+
+<div *ngIf="!cargandoHistorial && modo === 'historia'">
+
+  <button class="volver" (click)="volver()">Volver</button>
+
+  <h2>Historia Clínica de {{ pacienteSeleccionado?.nombre }}</h2>
+
+  <div *ngFor="let h of historialPaciente" class="historia-item">
+    <p><b>Fecha:</b> {{ h.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+    <p><b>Peso:</b> {{ h.peso }}</p>
+    <p><b>Altura:</b> {{ h.altura }}</p>
+    <p><b>Temperatura:</b> {{ h.temperatura }}</p>
+    <p><b>Presión:</b> {{ h.presion }}</p>
+
+    <div *ngFor="let d of h.datos_dinamicos">
+      <b>{{ d.clave }}:</b> {{ d.valor }}
+    </div>
+
+    <hr>
+  </div>
+
+</div>

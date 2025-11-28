@@ -40,7 +40,7 @@ export class ComponenteRegistroAdmin {
   }
 
   volver(){
-    this.router.navigate(['/registro']);
+    this.router.navigate(['/home']);
     this.adminForm.reset();
     this.previsualizarUrls = [];
   }
@@ -52,6 +52,13 @@ export class ComponenteRegistroAdmin {
       const {nombre, apellido, edad, dni, mail, contrasena, fotos } = this.adminForm.value;
 
       try{
+
+        const existente = await this.supabaseService.obtenerUsuarioPorEmail(mail);
+        if (existente) {
+          Swal.fire('Error', 'Este correo ya está registrado en el sistema.', 'error');
+          return;
+        }
+
         const { data, error } = await this.supabaseService.registrarse( mail, contrasena);
 
         if (error) throw error;

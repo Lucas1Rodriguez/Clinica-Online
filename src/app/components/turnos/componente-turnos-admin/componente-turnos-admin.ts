@@ -106,7 +106,8 @@ export class ComponenteTurnosAdmin implements OnInit {
     this.turnosFiltrados = this.turnos.filter(t =>
       (
         t.especialidad.toLowerCase().includes(valor) ||
-        t.pacienteNombre?.toLowerCase().includes(valor)
+        t.pacienteNombre?.toLowerCase().includes(valor) ||
+        t.especialistaNombre?.toLowerCase().includes(valor)
       ) &&
       t.estado !== EstadoTurno.Cancelado &&
       t.estado !== EstadoTurno.Rechazado

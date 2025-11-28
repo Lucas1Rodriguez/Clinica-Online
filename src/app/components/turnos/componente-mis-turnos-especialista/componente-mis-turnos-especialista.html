@@ -1,37 +1,113 @@
 <div class="cargando" *ngIf="cargando">Cargando tus turnos...</div>
 
-<input type="text" placeholder="Filtrar por paciente o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
+<div class="filtro-container">
+<input class="filtro-turnos" type="text" placeholder="Filtrar por paciente, historia clinica o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
+</div>
+
 
 <div class="noTurnos" *ngIf="!cargando && turnosFiltrados.length === 0">
   No tenés turnos asignados.
 </div>
 
+<div *ngIf="!cargando">
 
-<div *ngFor="let turno of turnosFiltrados" class="form-container">
 
+  <div *ngFor="let turno of turnosFiltrados" class="form-container">
 
     <p><b>Paciente:</b> {{ turno.pacienteNombre || turno.paciente_id }}</p>
     <p><b>Especialidad:</b> {{ turno.especialidad }}</p>
     <p><b>Fecha:</b> {{ turno.fecha }}</p>
     <p><b>Hora:</b> {{ turno.hora }}</p>
     <p>
-    <b>Estado:</b>
-    <span [ngClass]="{
-        'estado-pendiente': turno.estado === 'Pendiente',
-        'estado-aceptado': turno.estado === 'Aceptado',
-        'estado-cancelado': turno.estado === 'Cancelado',
-        'estado-rechazado': turno.estado === 'Rechazado',
-        'estado-realizado': turno.estado === 'Realizado'
-    }">
-        {{ turno.estado }}
-    </span>
+      <b>Estado:</b>
+      <span [ngClass]="{
+          'estado-pendiente': turno.estado === 'Pendiente',
+          'estado-aceptado': turno.estado === 'Aceptado',
+          'estado-cancelado': turno.estado === 'Cancelado',
+          'estado-rechazado': turno.estado === 'Rechazado',
+          'estado-realizado': turno.estado === 'Realizado'
+      }">
+          {{ turno.estado }}
+      </span>
     </p>
 
     <div class="acciones">
-    <button *ngIf="!['Aceptado','Realizado','Rechazado'].includes(turno.estado)" (click)="cancelarTurno(turno)">Cancelar</button>
-    <button *ngIf="!['Aceptado','Realizado','Cancelado'].includes(turno.estado)" (click)="rechazarTurno(turno)">Rechazar</button>
-    <button *ngIf="!['Realizado','Cancelado','Rechazado'].includes(turno.estado)" (click)="aceptarTurno(turno)">Aceptar</button>
-    <button *ngIf="turno.estado === 'Aceptado'" (click)="finalizarTurno(turno)">Finalizar</button>
-    <button *ngIf="turno.resena" (click)="verResena(turno.resena)">Ver reseña</button>
+        <button *ngIf="!['Aceptado','Realizado','Rechazado'].includes(turno.estado)" (click)="cancelarTurno(turno)">Cancelar</button>
+        <button *ngIf="!['Aceptado','Realizado','Cancelado'].includes(turno.estado)" (click)="rechazarTurno(turno)">Rechazar</button>
+        <button *ngIf="!['Realizado','Cancelado','Rechazado', 'Aceptado'].includes(turno.estado)" (click)="aceptarTurno(turno)">Aceptar</button>
+        <button *ngIf="turno.estado === 'Aceptado'" (click)="finalizarTurno(turno)">Finalizar</button>
+        <button *ngIf="turno.resenaEspecialista" (click)="verResena(turno.resenaEspecialista)">Ver reseña</button>
     </div>
+
+  </div>
+
+  <div class="modal-backdrop" *ngIf="mostrarModal"></div>
+
+  <div class="modal" *ngIf="mostrarModal">
+    <div class="modal-content">
+
+      <h2>Historia Clínica</h2>
+
+      <form [formGroup]="form">
+
+        <div class="campo">
+          <label>Altura (cm)</label>
+          <input type="number" formControlName="altura">
+        </div>
+
+        <div class="campo">
+          <label>Peso (kg)</label>
+          <input type="number" formControlName="peso">
+        </div>
+
+        <div class="campo">
+          <label>Temperatura (°C)</label>
+          <input type="number" formControlName="temperatura">
+        </div>
+
+        <div class="campo">
+          <label>Presión</label>
+          <input type="text" formControlName="presion">
+        </div>
+
+        <hr>
+
+        <h3>Datos adicionales (máx. 3)</h3>
+
+        <div class="dato-extra" *ngFor="let d of dinamicos; let i = index">
+
+          <input type="text"
+                [(ngModel)]="d.clave"
+                [ngModelOptions]="{standalone: true}"
+                placeholder="Clave"
+                name="clave{{i}}">
+
+          <input type="text"
+                [(ngModel)]="d.valor"
+                [ngModelOptions]="{standalone: true}"
+                placeholder="Valor"
+                name="valor{{i}}">
+
+          <button type="button" (click)="eliminarDato(i)">
+            Eliminar
+          </button>
+        </div>
+
+        <button 
+          type="button" 
+          class="btn-agregar"
+          (click)="agregarDato()" 
+          [disabled]="dinamicos.length >= 3">
+          + Agregar dato
+        </button>
+
+        <div class="modal-buttons">
+          <button type="button" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" (click)="guardarHistoriaClinica()">Guardar</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
 </div>

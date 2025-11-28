@@ -7,16 +7,17 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import Swal from 'sweetalert2';
+import { CapitalizarPipe } from '../../../pipes/capitalizar-pipe';
 
 registerLocaleData(localeEs);
 
 @Component({
   selector: 'app-componente-solicitar-turno',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CapitalizarPipe],
   templateUrl: './componente-solicitar-turno.html',
   styleUrl: './componente-solicitar-turno.css',
   providers: [
-    { provide: LOCALE_ID, useValue: 'es' } // <-- cambia el locale global a español
+    { provide: LOCALE_ID, useValue: 'es' }
   ]
 })
 export class ComponenteSolicitarTurno {
@@ -39,72 +40,70 @@ export class ComponenteSolicitarTurno {
   pacienteSeleccionado: any = null;
   pacientes: any[] = [];
 
+  especialidadImagenes: Record<string, string> = {
+    "Pediatría": "assets/iconos/pediatria.png",
+    "Dermatología": "assets/iconos/dermatologia.png",
+    "Cardiología": "assets/iconos/cardiologia.png",
+    "Odontología": "assets/iconos/odontologia.png",
+    "Neurología": "assets/iconos/neurologia.png",
+    "Nutrición": "assets/iconos/nutricion.png",
+    "Radiología": "assets/iconos/radiologia.png",
+    "Traumatología": "assets/iconos/traumatologia.png",
+    "default": "assets/iconos/default.png"
+  };
+
   constructor(private supabase: Supabase, private turnosService: Turnos) {}
 
   async ngOnInit() {
     const user = await this.supabase.obtenerUsuario();
     this.usuarioId = user?.id ?? null;
+    const { data: admin } = await this.supabase.getCliente()
+    .from('admins')
+    .select('*')
+    .eq('id', this.usuarioId)
+    .single();
 
-    this.especialidades = (await this.turnosService.getEspecialidades());
-    this.especialistas = await this.turnosService.getEspecialistas();
-
-    if (user?.role === 'admin') {
+    if (admin) {
       this.rol = 'admin';
-      const { data } = await this.supabase.getCliente()
+    
+      const { data: pacientes } = await this.supabase.getCliente()
         .from('usuarios')
-        .select('*')
-        .eq('rol', 'paciente');
-      this.pacientes = data || [];
+        .select('*');
+
+        this.pacientes = pacientes || [];
+      } else {
+        this.rol = 'paciente';
     }
+
+    this.especialidades = await this.turnosService.getEspecialidades();
+    this.especialistas = await this.turnosService.getEspecialistas();
 
     this.cargando = false;
   }
 
   async seleccionarEspecialidad(especialidad: string) {
-    this.especialidadSeleccionada = null;
-    this.especialistasFiltrados = [];
-
-    if (!especialidad) return;
-
-    const pacienteId = this.rol === 'paciente'
-      ? this.usuarioId
-      : this.pacienteSeleccionado?.id;
-
-    if (pacienteId) {
-      const yaTiene = await this.turnosService.tieneTurnoDeEspecialidad(pacienteId, especialidad);
-
-      if (yaTiene) {
-        Swal.fire(
-          'Turno existente',
-          'Ya tenés un turno de esta especialidad. No podés solicitar otro.',
-          'warning'
-        );
-        return;
-      }
-    }
-
     this.especialidadSeleccionada = especialidad;
 
-    this.especialistaSeleccionado = null;
-    this.diasDisponibles = [];
-    this.horasDisponibles = [];
+    this.diaSeleccionado = null;
+    this.horaSeleccionada = null;
 
-    this.especialistasFiltrados = this.especialistas
-      .filter(e => e.especialidades.includes(especialidad))
-      .map(e => ({ id: e.id, nombre: e.nombre }));
+    const dias = await this.turnosService.getDiasDisponibles(this.especialistaSeleccionado.id);
+    this.diasDisponibles = dias.map((d: string | Date) => new Date(d));
+
+    this.horasDisponibles = [];
   }
 
-  async seleccionarEspecialista(id: string) {
-    this.especialistaSeleccionado = this.especialistasFiltrados.find(e => e.id == id);
+  async seleccionarEspecialista(especialista: any) {
+    this.especialistaSeleccionado = especialista;
+
+    this.especialidadSeleccionada = null;
     this.diaSeleccionado = null;
+    this.horaSeleccionada = null;
+
+    this.especialidades = especialista.especialidades || [];
+
+    this.diasDisponibles = [];
     this.horasDisponibles = [];
-
-    if (this.especialistaSeleccionado) {
-      const dias = await this.turnosService.getDiasDisponibles(this.especialistaSeleccionado.id);
-
-      this.diasDisponibles = dias.map((d: string | Date) => new Date(d));
-      console.log("DIAS DEL SERVICIO:", dias);
-    }
   }
 
   async seleccionarDia(dia: Date) {
@@ -152,5 +151,15 @@ export class ComponenteSolicitarTurno {
     } catch (e) {
       Swal.fire('Error', 'Ocurrió un problema al registrar el turno.', 'error');
     }
+  }
+
+  cambiarPaciente() {
+    this.especialidadSeleccionada = null;
+    this.especialistaSeleccionado = null;
+    this.diaSeleccionado = null;
+    this.horaSeleccionada = null;
+    this.especialistasFiltrados = [];
+    this.diasDisponibles = [];
+    this.horasDisponibles = [];
   }
 }

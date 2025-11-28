@@ -1,0 +1,50 @@
+<div *ngIf="cargando" class="cargando">Cargando usuarios...</div>
+
+<div *ngIf="!cargando && modo === 'lista'">
+  <h2>Usuarios Registrados</h2>
+
+  <div *ngFor="let u of usuarios" class="usuario-item">
+    <p>{{ u.nombre }} {{ u.apellido }} - {{ u.mail }}</p>
+    <button (click)="verHistoria(u.id)">Ver historia clínica</button>
+  </div>
+
+  <!--<button (click)="descargarExcel()">Descargar Excel</button>-->
+</div>
+
+<div *ngIf="cargandoHistorial" class="cargando">Cargando Historial</div>
+
+<div *ngIf="modo === 'historia' && !cargandoHistorial">
+
+
+  <button class="volver" (click)="volver()">Volver</button>
+
+  <h2>Historia Clínica de {{ pacienteSeleccionado?.nombre }}</h2>
+
+  <div *ngIf="(historialPaciente || []).length > 0; else noHistoria">
+    <div *ngFor="let h of historialPaciente" class="historia-item">
+      <p><b>Fecha:</b> {{ h.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+      <p><b>Peso:</b> {{ h.peso }} kg</p>
+      <p><b>Altura:</b> {{ h.altura }} cm</p>
+      <p><b>Temperatura:</b> {{ h.temperatura }} °C</p>
+      <p><b>Presión:</b> {{ h.presion }}</p>
+
+      <div *ngIf="h.datos_dinamicos?.length > 0">
+        <h4>Datos adicionales</h4>
+        <div *ngFor="let d of h.datos_dinamicos" class="dinamico">
+          <b>{{ d.clave }}:</b> {{ d.valor }}
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+
+  <ng-template #noHistoria>
+    <div class="no-historia">
+      No tiene historia clínica.
+    </div>
+  </ng-template>
+
+</div>
+
+
+

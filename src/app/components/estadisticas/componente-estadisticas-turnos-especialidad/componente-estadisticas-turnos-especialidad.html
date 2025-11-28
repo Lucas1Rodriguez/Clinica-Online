@@ -1,0 +1,31 @@
+<div class="turnos-especialidad-container">
+  <h2>Cantidad de Turnos por Especialidad</h2>
+
+  <div class="grafico-container">
+    <canvas id="graficoEspecialidades"></canvas>
+  </div>
+
+  <div class="botones">
+    <button (click)="exportarExcelEspecialidades()">Exportar Excel</button>
+    <button (click)="exportarPDFEspecialidades()">Exportar PDF</button>
+  </div>
+
+  <table class="tabla" *ngIf="turnosPorEspecialidad && objectKeys(turnosPorEspecialidad).length > 0">
+    <thead>
+      <tr>
+        <th>Especialidad</th>
+        <th>Cantidad de Turnos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let key of objectKeys(turnosPorEspecialidad)" highlightHover highlightColor="#557ff3">
+        <td>{{ key }}</td>
+        <td>{{ turnosPorEspecialidad[key] }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!turnosPorEspecialidad || objectKeys(turnosPorEspecialidad).length === 0" class="vacio">
+    No hay datos disponibles.
+  </div>
+</div>

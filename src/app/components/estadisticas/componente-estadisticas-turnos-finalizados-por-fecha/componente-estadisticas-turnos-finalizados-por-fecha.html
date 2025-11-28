@@ -1,0 +1,43 @@
+<div class="turnos-especialista-container">
+
+  <h2>Turnos finalizados por médico (por fecha)</h2>
+
+ <div class="filtros">
+    <label>Fecha desde:</label>
+    <input type="date" [(ngModel)]="fechaDesde" />
+
+    <label>Fecha hasta:</label>
+    <input type="date" [(ngModel)]="fechaHasta" />
+
+    <button (click)="cargarTurnosFinalizados()">Filtrar</button>
+  </div>
+
+  <div class="grafico-container">
+    <canvas id="graficoFinalizados"></canvas>
+  </div>
+
+  <div class="botones" *ngIf="graficoFinCargado">
+    <button (click)="exportarExcelFinalizados()">Exportar Excel de turnos finalizados por especialista</button>
+    <button (click)="exportarPDFFinalizados()">Exportar PDF de turnos finalizados por especialista</button>
+  </div>
+
+
+  <table class="tabla" *ngIf="datosFinalizados!.length > 0">
+    <thead>
+      <tr>
+        <th>Especialista</th>
+        <th>Cantidad de Turnos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of datosFinalizados" highlightHover highlightColor="#557ff3">
+        <td>{{ item.medico }}</td>
+        <td>{{ item.cantidad }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!datosFinalizados?.length && graficoFinCargado" class="vacio">
+    No hay datos disponibles para el rango seleccionado.
+  </div>
+</div>

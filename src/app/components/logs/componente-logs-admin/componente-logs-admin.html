@@ -1,0 +1,35 @@
+<div class="cargando" *ngIf="cargando">Cargando logs...</div>
+
+<div *ngIf="!cargando && logs.length === 0" class="vacio">
+  No hay ingresos registrados.
+</div>
+
+<div *ngIf="!cargando">
+  <h2>Log de ingresos al sistema</h2>
+
+  <div class="acciones">
+    <button (click)="exportarPdf()">Descargar PDF</button>
+    <button (click)="exportarExcel()">Descargar Excel</button>
+  </div>
+
+  <table *ngIf="logs.length > 0" class="tabla-logs">
+
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs" highlightHover highlightColor="#557ff3">
+        <td>{{ log.email }}</td>
+        <td>{{ log.rol | rolLabel }}</td>
+        <td>{{ log.fecha | fechaCorta }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+
+</div>

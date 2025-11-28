@@ -10,10 +10,67 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.info {
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #02b0e6;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
 .foto-perfil {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 10px;
+  border: 2px solid #02b0e6;
+}
+
+.foto-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-weight: bold;
+  font-size: 14px;
+  border: 2px solid #02b0e6;
+}
+
+.historial-pdf {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid #02b0e6;
+  border-radius: 12px;
+}
+
+.historial-pdf select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #02b0e6;
+}
+
+.historial-pdf button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #02b0e6;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: fit-content;
+}
+
+.historial-pdf button:disabled {
+  background-color: #aacde1;
+  cursor: not-allowed;
+}
+
+.historial-pdf button:hover:not(:disabled) {
+  background-color: #0194c8;
 }

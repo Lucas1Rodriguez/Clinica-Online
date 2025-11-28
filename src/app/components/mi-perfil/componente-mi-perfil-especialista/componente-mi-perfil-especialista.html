@@ -3,12 +3,14 @@
   <h2>Mi Perfil</h2>
 
   <div *ngIf="especialista">
-
-    <img class="foto-perfil" [src]="especialista.fotos" alt="foto">
-    <p><strong>Nombre:</strong> {{ especialista.nombre }}</p>
-    <p><strong>Correo:</strong> {{ user?.email }}</p>
-    <p><strong>Especialidad:</strong> {{ especialista.especialidades }}</p>
-
+    
+    <div class="info">
+      <img class="foto-perfil" [src]="especialista.fotos" alt="foto">
+      <p><strong>Nombre:</strong> {{ especialista.nombre }}</p>
+      <p><strong>Correo:</strong> {{ user?.email }}</p>
+      <p><strong>Especialidad:</strong> {{ especialista.especialidades }}</p>
+    </div>
+    
     <hr>
 
     <h3>Mis horarios</h3>

@@ -1,0 +1,90 @@
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cargando {
+  text-align: center;
+  color: #02b0e6;
+  margin-top: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.usuario-item {
+  background: #ffffff;
+  max-width: 550px;
+  margin: 12px auto;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.usuario-item p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.usuario-item button {
+  background: #1976d2;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.usuario-item button:hover {
+  background: #0d4d8a;
+}
+
+.historia-item {
+  background: #fdfdfd;
+  max-width: 550px;
+  margin: 15px auto;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+.historia-item p {
+  margin: 5px 0;
+}
+
+.dinamico {
+  margin-top: 5px;
+  padding-left: 8px;
+  border-left: 3px solid #ddd;
+}
+
+button.volver {
+  cursor: pointer;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.2s ease;
+  background: #1976d2;
+  color: #fff;
+  width: 150px;
+  height: 30px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.no-historia {
+  padding: 20px;
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  margin-top: 10px;
+}

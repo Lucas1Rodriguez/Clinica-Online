@@ -5,6 +5,12 @@ import { Supabase } from '../../../services/supabase';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+declare var grecaptcha: any;
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
 
 @Component({
   selector: 'app-componente-registro-usuario',
@@ -26,8 +32,21 @@ export class ComponenteRegistroUsuario {
   nombreUsuario: string | null = null;
   usuarioForm: FormGroup;
   previsualizarUrls: string[] = [];
+  captchaToken: string | null = null;
   
-  async ngOnInit(){
+  
+  ngAfterViewInit() {
+    const interval = setInterval(() => {
+      if (window['grecaptcha']) {
+        grecaptcha.render('captcha-container', {
+          sitekey: '6Lf9NRAsAAAAAKJToFYvxpKMMRZSXYILTyQglVx6',
+          callback: (token: string) => {
+            this.captchaToken = token;
+          }
+        });
+        clearInterval(interval);
+      }
+    }, 300);
   }
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef, private supabaseService: Supabase, private router: Router){
@@ -46,17 +65,30 @@ export class ComponenteRegistroUsuario {
 
 
   volver(){
-    this.router.navigate(['/registro']);
+    this.router.navigate(['/registro'], { queryParams: {}});
     this.usuarioForm.reset();
+    this.captchaToken = null;
     this.previsualizarUrls = [];
   }
 
   async enviarUsuario() {
+    if (!this.captchaToken || this.captchaToken.length < 20) {
+      Swal.fire("Error", "Captcha inválido o no resuelto.", "error");
+      return;
+    }
+
     if (this.usuarioForm.valid) {
 
       const {nombre, apellido, edad, dni, obraSocial, mail, contrasena, fotos } = this.usuarioForm.value;
 
       try{
+
+        const existente = await this.supabaseService.obtenerUsuarioPorEmail(mail);
+        if (existente) {
+          Swal.fire('Error', 'Este correo ya está registrado en el sistema.', 'error');
+          return;
+        }
+
         const { data, error } = await this.supabaseService.registrarse( mail, contrasena);
 
         if (error) throw error;
@@ -86,6 +118,8 @@ export class ComponenteRegistroUsuario {
           this.usuarioForm.reset();
           this.router.navigate(['/registro']);
           this.previsualizarUrls = [];
+          grecaptcha.reset();
+          this.captchaToken = null;
       }catch(error: any){
         console.error('Error en Supabase:', error);
         Swal.fire({
@@ -159,11 +193,6 @@ export class ComponenteRegistroUsuario {
 
     }
   }
-
-
-
-
-
 
   async onFileSelected(event: any) {
     const files: FileList = event.target.files;

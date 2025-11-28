@@ -1,7 +1,8 @@
 <div class="cargando" *ngIf="cargando">Cargando turnos...</div>
 
-<input type="text" placeholder="Filtrar por paciente o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
-
+<div class="filtro-container">
+    <input class="filtro-turnos" type="text" placeholder="Filtrar por paciente, especialista o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
+</div>
 
 <div class="noTurnos" *ngIf="!cargando && turnosFiltrados.length === 0">
     No hay turnos registrados.

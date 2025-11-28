@@ -1,21 +1,36 @@
 <div class="navbar">
-    
-  <a *ngIf="!estaLogueado" routerLink="/login">Login</a>
-  <a *ngIf="!estaLogueado" routerLink="/registro">Registrarse</a>
 
-  <a *ngIf="estaLogueado" routerLink="/home">Home</a>
+  <ng-container *ngIf="!estaLogueado">
+    <a *noEnRuta="['/login']" routerLink="/login">Login</a>
+    <a *noEnRuta="['/registro']" routerLink="/registro">Registrarse</a>
+  </ng-container>
 
-  <a *ngIf="rolActual === 'especialista'" routerLink="/mis-turnos-especialista">Mis turnos</a>
-  <a *ngIf="rolActual === 'especialista'" routerLink="/mi-perfil-especialista">Mi Perfil</a>
+  <ng-container *ngIf="estaLogueado">
+    <a *noEnRuta="['/home']" routerLink="/home">Home</a>
+  </ng-container>
 
-  <a *ngIf="rolActual === 'paciente'" routerLink="/mis-turnos-usuario">Mis turnos</a>
-  <a *ngIf="rolActual === 'paciente'" routerLink="/solicitar-turno">Solicitar Turno</a>
-  <a *ngIf="rolActual === 'paciente'" routerLink="/mi-perfil-usuarios">Mi Perfil</a>
+  <ng-container *mostrarSiRol="{ roles: ['especialista'], rolActual: rolActual || '' }">
+    <a *noEnRuta="['/mis-turnos-especialista']" routerLink="/mis-turnos-especialista">Mis turnos</a>
+    <a *noEnRuta="['/historial-especialista']" routerLink="/historial-especialista">Pacientes</a>
+    <a *noEnRuta="['/mi-perfil-especialista']" routerLink="/mi-perfil-especialista">Mi Perfil</a>
+  </ng-container>
 
-  <a *ngIf="rolActual === 'admin'" routerLink="/turnos-admin">Turnos</a>
-  <a *ngIf="rolActual === 'admin'" routerLink="/registro/admin">Registrar Administrador</a>
-  <a *ngIf="rolActual === 'admin'" routerLink="/mi-perfil-admin">Mi Perfil</a>
+  <ng-container *mostrarSiRol="{ roles: ['paciente'], rolActual: rolActual || '' }">
+    <a *noEnRuta="['/mis-turnos-usuario']" routerLink="/mis-turnos-usuario">Mis turnos</a>
+    <a *noEnRuta="['/solicitar-turno']" routerLink="/solicitar-turno">Solicitar Turno</a>
+    <a *noEnRuta="['/mi-perfil-usuarios']" routerLink="/mi-perfil-usuarios">Mi Perfil</a>
+  </ng-container>
+
+  <ng-container *mostrarSiRol="{ roles: ['admin'], rolActual: rolActual || '' }">
+    <a *noEnRuta="['/seccion-usuarios']" routerLink="/seccion-usuarios">Usuarios</a>
+    <a *noEnRuta="['/turnos-admin']" routerLink="/turnos-admin">Turnos</a>
+    <a *noEnRuta="['/solicitar-turno']" routerLink="/solicitar-turno">Solicitar Turno</a>
+    <a *noEnRuta="['/registro/admin']" routerLink="/registro/admin">Registrar Administrador</a>
+    <a *noEnRuta="['/historial-admin']" routerLink="/historial-admin">Historias clínicas</a>
+    <a *noEnRuta="['/logs']" routerLink="/logs">Logs</a>
+    <a *noEnRuta="['/estadisticas']" routerLink="/estadisticas">Estadísticas</a>
+    <a *noEnRuta="['/mi-perfil-admin']" routerLink="/mi-perfil-admin">Mi Perfil</a>
+  </ng-container>
 
   <a *ngIf="estaLogueado" (click)="cerrarSesion()">Cerrar Sesión</a>
 </div>
-

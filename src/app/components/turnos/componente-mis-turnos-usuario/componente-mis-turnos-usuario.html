@@ -1,6 +1,8 @@
 <div class="cargando" *ngIf="cargando">Cargando tus turnos...</div>
 
-<input type="text" placeholder="Filtrar por paciente o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
+<div class="filtro-container">
+    <input class="filtro-turnos" type="text" placeholder="Filtrar por especialista, historia clinica o especialidad" *ngIf="!cargando && turnosFiltrados.length >= 0" (input)="filtrarTurnos($event)">
+</div>
 
 <div class="noTurnos" *ngIf="!cargando && turnosFiltrados.length === 0">
     No tenés turnos registrados.
@@ -24,7 +26,9 @@
 
     <div class="acciones">
     <button *ngIf="turno.estado === 'Pendiente'" (click)="cancelarTurno(turno)">Cancelar</button>
-    <button *ngIf="turno.estado === 'Realizado' && !turno.resena" (click)="calificarTurno(turno)">Calificar</button>
+    <button *ngIf="turno.estado === 'Realizado' && !turno.resenaPaciente" (click)="calificarTurno(turno)">Calificar</button>
+    <button *ngIf="turno.resenaPaciente" (click)="verResena(turno.resenaPaciente)">Ver reseña</button>
+    <button *ngIf="turno.estado === 'Realizado' && !turno.encuestaCompletada" (click)="completarEncuesta(turno)">Completar Encuesta</button>
     </div>
 
 </div>

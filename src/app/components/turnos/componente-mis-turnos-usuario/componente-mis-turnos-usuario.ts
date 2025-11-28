@@ -37,7 +37,11 @@ export class ComponenteMisTurnosUsuario implements OnInit {
     }));
 
     this.turnosFiltrados = this.turnos.filter(t => t.estado !== EstadoTurno.Cancelado);
-    console.log('Turnos normalizados:', this.turnos);
+
+    for (let turno of this.turnos) {
+      const { data: historia } = await this.supabase.getHistoriaPorTurno(turno.id);
+      turno.historiaClinica = historia ?? null;
+    }
   }
 
   this.cargando = false;
@@ -47,6 +51,11 @@ export class ComponenteMisTurnosUsuario implements OnInit {
     if (this.usuarioId) {
       this.turnos = await this.turnosService.getTurnosPorPaciente(this.usuarioId);
       this.turnosFiltrados = this.turnos.filter(t => t.estado !== EstadoTurno.Cancelado);
+
+      for (let turno of this.turnos) {
+        const { data: historia } = await this.supabase.getHistoriaPorTurno(turno.id);
+        turno.historiaClinica = historia ?? null;
+      }
 
       this.turnos = this.turnos.map(t => ({
         ...t,
@@ -130,15 +139,78 @@ export class ComponenteMisTurnosUsuario implements OnInit {
 
   filtrarTurnos(event: any) {
     const valor = event.target.value.toLowerCase();
-    
-    this.turnosFiltrados = this.turnos.filter(t =>
-      (
-        t.especialidad.toLowerCase().includes(valor) ||
-        t.pacienteNombre?.toLowerCase().includes(valor)
-      ) &&
-      t.estado !== EstadoTurno.Cancelado &&
-      t.estado !== EstadoTurno.Rechazado
-    );
+
+    this.turnosFiltrados = this.turnos.filter(t => {
+
+      let historiaTexto = '';
+
+      if (t.historiaClinica) {
+        const h = t.historiaClinica;
+
+        historiaTexto += `altura: ${h.altura} `;
+        historiaTexto += `peso: ${h.peso} `;
+        historiaTexto += `temperatura: ${h.temperatura} `;
+        historiaTexto += `presion: ${h.presion} `;
+
+        if (h.datos_dinamicos) {
+          h.datos_dinamicos.forEach(d => {
+            historiaTexto += `${d.clave}: ${d.valor} `;
+          });
+        }
+      }
+
+      const textoBuscado = `
+        ${t.especialidad}
+        ${t.especialistaNombre}
+        ${historiaTexto}
+      `.toLowerCase();
+
+      return (
+        textoBuscado.includes(valor) &&
+        t.estado !== EstadoTurno.Cancelado
+      );
+    });
+    }
+
+  verResena(resena: string) {
+    Swal.fire('Reseña del turno', resena, 'info');
   }
+
+  async completarEncuesta(turno: Turno) {
+  const { value: respuestas } = await Swal.fire({
+    title: 'Completar encuesta',
+    html: `
+      <label>¿Cómo fue la atención?</label>
+      <input id="atencion" class="swal2-input">
+      <label>¿Recomendarías al especialista?</label>
+      <select id="recomienda" class="swal2-select">
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: 'Enviar',
+    preConfirm: () => {
+      const atencion = (document.getElementById('atencion') as HTMLInputElement).value;
+      const recomienda = (document.getElementById('recomienda') as HTMLSelectElement).value;
+      if (!atencion) Swal.showValidationMessage('Debes completar la atención');
+      return { atencion, recomienda };
+    }
+  });
+
+  if (respuestas) {
+    await this.turnosService.guardarEncuesta(turno.id, respuestas);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Encuesta enviada',
+      timer: 1500,
+      showConfirmButton: false
+    });
+
+    await this.cargarTurnos();
+  }
+}
 
 }

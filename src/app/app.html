@@ -1,3 +1,5 @@
-<app-componente-menu></app-componente-menu>
+<app-componente-menu *ngIf="!EstaEnComponente('/bienvenida')"></app-componente-menu>
 
-<router-outlet></router-outlet>
+<main [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</main>

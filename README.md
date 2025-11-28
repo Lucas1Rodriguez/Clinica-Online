@@ -1,59 +1,41 @@
 # ClinicaOnline
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+La clinica comienza en una pagina de bienvenida donde se puede ingresar a Iniciar Sesión o Registrar a través de los botones correspondientes.
 
-## Development server
+Dentro del registrar se puede registrar un usuario o un especialista.
 
-To start a local development server, run:
+Los usuarios cargaran su nombre, apellido, edad, dni, obra social, mail, contraseña, 2 fotos y un captcha.
+Los especialistas cargaran su nombre, apellido, edad, dni, obra social, mail, contraseña y 1 foto.
 
-```bash
-ng serve
-```
+Dentro del login se ingresará mail y contraseña para ingresar.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Tambien se encuentra un apartado donde se puede ingresar con distintos pacientes, especialistas o un admin.
 
-## Code scaffolding
+Una vez dentro de la pagina se encuentra la home y a partir del menú según el rol se puede ingresar a distintos apartados.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+El paciente puede ingresar a Mis turnos, Solicitar Turnos, Mi perfil o cerrar sesión. 
 
-```bash
-ng generate component component-name
-```
+Dentro de mis turnos podrá ver todos sus turnos pendientes, realizados, aceptados y podrá filtrar por especialidad, especialista y su historia clinica.
+Dentro de solicitar turno podrá elegir el especialista con quien quiere el turno, la especialidad de este mismo, un día y un horario.
+Dentro de mi perfil podrá ver sus datos como su foto, nombre, apellido, obra social, mail y podrá seleccionar una especialidad de un turno que haya tenido donde podrá ver su historia clinica.
+Cerrar Sesión lo devolverá al login.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+El especialista puede ingresar a Mis Turnos, Pacientes, Mi perfil o cerrar sesión.
 
-```bash
-ng generate --help
-```
+Dentro de mis turnos podrá ver todos sus turnos pendientes, realizados, aceptados, cancelados o rechazados y podrá filtrar por especialidad, especialista y la historia clinica de los turnos.
+Dentro de pacientes podrá ver a todos los pacientes que haya atendido al menos una vez y revisar su historia medica.
+Dentro de mi perfil podrá ver sus datos como su foto, nombre, mail, especialidades y podrá seleccionar sus horarios de trabajo.
+Cerrar Sesión lo devolverá al login.
 
-## Building
+El admin puede ingresar a Usuarios, Turnos, Solicitar turno, Registrar Administrador, Historias Clinicas, Logs, Estadisticas, Mi perfil o cerrar sesión.
 
-To build the project run:
+Dentro de usuarios podrá ver todos los usuarios del sistema, habilitar o inhabilitar a los especialistas y descargar un excel con los datos de todos los usuarios o de un paciente especifico.
+Dentro de turnos podrá ver los turnos y cancelarlos.
+Dentro de solicitar turno podrá elegir el paciente al que quiere asignarle un turno, el especialista con quien quiere el turno, la especialidad de este mismo, un día y un horario.
+Dentro de registrar administrador cargara el nombre, apellido, edad, dni, mail, contraseña y 1 foto del administrador que desee registrar.
+Dentro de historias clinicas podrá ver todos los pacientes y su historia clinica si tuvieran una.
+Dentro de logs podrá ver todos los logs del sistema, el mail de quien entró, su rol y la fecha en la que entró. Y podrá descargar un excel o un pdf con los datos del logs.
+Dentro de estadisticas según el botón presionado podrá ver la cantidad de turnos por especialidad, la cantidad de turnos por día, la cantidad de turnos por especialista en un rango elegido y la cantidad de turnos finalizados en un rango elegido.
+Dentro de mi perfil podrá ver sus datos como su foto, nombre, apellido y mail.
+Cerrar Sesión lo devolverá al login.
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

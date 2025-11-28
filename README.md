@@ -24,7 +24,7 @@ El paciente puede ingresar a Mis turnos, Solicitar Turnos, Mi perfil o cerrar se
 
 * Dentro de mi perfil podrá ver sus datos como su foto, nombre, apellido, obra social, mail y podrá seleccionar una especialidad de un turno que haya tenido donde podrá ver su historia clinica.
 
-*Cerrar Sesión lo devolverá al login.
+* Cerrar Sesión lo devolverá al login.
 
 
 El especialista puede ingresar a Mis Turnos, Pacientes, Mi perfil o cerrar sesión.

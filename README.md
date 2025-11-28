@@ -22,7 +22,7 @@ El paciente puede ingresar a Mis turnos, Solicitar Turnos, Mi perfil o cerrar se
 
 * Dentro de solicitar turno podrá elegir el especialista con quien quiere el turno, la especialidad de este mismo, un día y un horario.
 
-* Dentro de mi perfil podrá ver sus datos como su foto, nombre, apellido, obra social, mail y podrá seleccionar una especialidad de un turno que haya tenido donde podrá ver su historia clinica.
+* Dentro de mi perfil podrá ver sus datos como su foto, nombre, apellido, obra social, mail y podrá seleccionar una especialidad de un turno que haya tenido donde podrá descargar un pdf con su historia clinica en esa especialidad.
 
 * Cerrar Sesión lo devolverá al login.
 
@@ -43,7 +43,7 @@ El admin puede ingresar a Usuarios, Turnos, Solicitar turno, Registrar Administr
 * Dentro de registrar administrador cargara el nombre, apellido, edad, dni, mail, contraseña y 1 foto del administrador que desee registrar.
 * Dentro de historias clinicas podrá ver todos los pacientes y su historia clinica si tuvieran una.
 * Dentro de logs podrá ver todos los logs del sistema, el mail de quien entró, su rol y la fecha en la que entró. Y podrá descargar un excel o un pdf con los datos del logs.
-* Dentro de estadisticas según el botón presionado podrá ver la cantidad de turnos por especialidad, la cantidad de turnos por día, la cantidad de turnos por especialista en un rango elegido y la cantidad de turnos finalizados en un rango elegido.
+* Dentro de estadísticas según el botón presionado podrá ver la cantidad de turnos por especialidad, la cantidad de turnos por día, la cantidad de turnos por especialista en un rango elegido y la cantidad de turnos finalizados en un rango elegido. Y podrá descargar un pdf o un excel de cada una de las estadísticas.
 * Dentro de mi perfil podrá ver sus datos como su foto, nombre, apellido y mail.
 * Cerrar Sesión lo devolverá al login.
 

@@ -4,9 +4,9 @@ La clinica comienza en una pagina de bienvenida donde se puede ingresar a Inicia
 
 Dentro del registrar se puede registrar un usuario o un especialista.
 
-*Los usuarios cargaran su nombre, apellido, edad, dni, obra social, mail, contraseña, 2 fotos y un captcha.
+* Los usuarios cargaran su nombre, apellido, edad, dni, obra social, mail, contraseña, 2 fotos y un captcha.
 
-*Los especialistas cargaran su nombre, apellido, edad, dni, obra social, mail, contraseña y 1 foto.
+* Los especialistas cargaran su nombre, apellido, edad, dni, obra social, mail, contraseña y 1 foto.
 
 
 Dentro del login se ingresará mail y contraseña para ingresar.
